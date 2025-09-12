@@ -1,0 +1,8 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.31/Modules/FindOpenGL.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/FindPackageMessage.cmake
+C:/Users/kevin/OneDrive - Delft University of Technology/3D Computer Graphics and Animation/Assignments/Exercise 3/exercise3/framework/CMakeLists.txt
+C:/Users/kevin/OneDrive - Delft University of Technology/3D Computer Graphics and Animation/Assignments/Exercise 3/exercise3/framework/cmake/CompilerWarnings.cmake
+C:/Users/kevin/OneDrive - Delft University of Technology/3D Computer Graphics and Animation/Assignments/Exercise 3/exercise3/framework/cmake/Sanitizers.cmake
+C:/Users/kevin/OneDrive - Delft University of Technology/3D Computer Graphics and Animation/Assignments/Exercise 3/exercise3/framework/cmake/StaticAnalyzers.cmake

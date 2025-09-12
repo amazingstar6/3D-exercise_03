@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\framework\third_party\imgui\src\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\framework\third_party\imgui\src\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\framework\third_party\imgui\src\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\framework\third_party\imgui\src\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\framework\third_party\imgui\src\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\framework\third_party\imgui\src\imgui_impl_opengl2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\framework\third_party\imgui\src\imgui_impl_opengl3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\framework\third_party\imgui\src\imgui_impl_glfw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\framework\third_party\imgui\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{F9D5DDB8-5437-3EF6-BC67-31BDB0B03B9D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

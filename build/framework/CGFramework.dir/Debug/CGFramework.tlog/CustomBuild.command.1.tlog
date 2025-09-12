@@ -1,0 +1,10 @@
+^C:\USERS\KEVIN\ONEDRIVE - DELFT UNIVERSITY OF TECHNOLOGY\3D COMPUTER GRAPHICS AND ANIMATION\ASSIGNMENTS\EXERCISE 3\EXERCISE3\FRAMEWORK\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/kevin/OneDrive - Delft University of Technology/3D Computer Graphics and Animation/Assignments/Exercise 3/exercise3" "-BC:/Users/kevin/OneDrive - Delft University of Technology/3D Computer Graphics and Animation/Assignments/Exercise 3/exercise3/build" --check-stamp-file "C:/Users/kevin/OneDrive - Delft University of Technology/3D Computer Graphics and Animation/Assignments/Exercise 3/exercise3/build/framework/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

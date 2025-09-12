@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\build\CMakeFiles\7abf36daa787ec96052afe91372b0b60\update_mappings.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\framework\third_party\glfw3\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\framework\third_party\glfw3\src\mappings.h.in">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\framework\third_party\glfw3\CMake\GenerateMappings.cmake" />
+    <None Include="C:\Users\kevin\OneDrive - Delft University of Technology\3D Computer Graphics and Animation\Assignments\Exercise 3\exercise3\build\framework\third_party\glfw3\src\CMakeFiles\update_mappings" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{462F26C1-82F6-3AB5-8ED7-91D4CF9E9B48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{D051202B-CE4F-3386-8B07-FF2550409B8A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
