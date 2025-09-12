@@ -15,5 +15,12 @@ uniform vec3 fragLightPosition;
 
 void main()
 {    
-    outColor = vec4(fragK_d*(dot(normalize(fragLightPosition), normalize(fragNormal))), 0.5);
+    /*
+    Real-time shadows book page 324
+    L_o^d(\mathbf{p}, \omega) = \kappa_d \max(0, \mathbf{n} \cdot \mathbf{l})
+    */
+    vec3 N = normalize(fragNormal);
+    vec3 L = normalize(fragLightPosition - fragPos);
+    float diffuseStrength = abs(dot(L, N));
+    outColor = vec4(fragK_d*diffuseStrength, 1);
 }
