@@ -582,6 +582,11 @@ int main(int argc, char** argv)
 
                             // === SET YOUR DIFFUSE TOON UNIFORMS HERE ===
                             // Values that you may want to pass to the shader are stored in light, shadingData.
+                            
+                            glUniform3fv(toonDiffuseShader.getUniformLocation("fragK_d"), 1, glm::value_ptr(shadingData.kd));
+                            glUniform3fv(toonDiffuseShader.getUniformLocation("fragLightPosition"), 1, glm::value_ptr(light.position));
+                            glUniform1i(toonDiffuseShader.getUniformLocation("fragToonDiscretize"), shadingData.toonDiscretize);
+
                             render(toonDiffuseShader);
                         }
                         if (toonLightingSpecular) {
@@ -589,7 +594,15 @@ int main(int argc, char** argv)
 
                             // === SET YOUR SPECULAR TOON UNIFORMS HERE ===
                             // Values that you may want to pass to the shader are stored in light, shadingData and cameraPos.
-                            render(toonSpecularShader);
+
+                            glUniform3fv(toonSpecularShader.getUniformLocation("fragK_s"), 1, glm::value_ptr(shadingData.ks));
+                            glUniform3fv(toonSpecularShader.getUniformLocation("fragCameraPos"), 1, glm::value_ptr(cameraPos));
+                            glUniform3fv(toonSpecularShader.getUniformLocation("fragLightPos"), 1, glm::value_ptr(light.position));
+                            glUniform1f(toonSpecularShader.getUniformLocation("fragShininess"), shadingData.shininess);
+
+                            glUniform1f(toonSpecularShader.getUniformLocation("fragToonSpecularThreshold"), shadingData.toonSpecularThreshold);
+
+                                render(toonSpecularShader);
                         }
                     }
                 }
@@ -601,8 +614,8 @@ int main(int argc, char** argv)
                         // glUniform1f(lambertShader.getUniformLocation("floatName"), 1, floatValue);
                         // glUniform3fv(lambertShader.getUniformLocation("vecName"), 1, glm::value_ptr(glmVector));
 
-                        glUniform3fv(1, 1, glm::value_ptr(shadingData.kd));
-                        glUniform3fv(2, 1, glm::value_ptr(light.position));
+                        glUniform3fv(lambertShader.getUniformLocation("fragK_d"), 1, glm::value_ptr(shadingData.kd));
+                        glUniform3fv(lambertShader.getUniformLocation("fragLightPosition"), 1, glm::value_ptr(light.position));
 
                         render(lambertShader);
                     }
@@ -616,7 +629,6 @@ int main(int argc, char** argv)
                         glUniform3fv(1, 1, glm::value_ptr(shadingData.ks));
                         glUniform3fv(2, 1, glm::value_ptr(cameraPos));
                         glUniform3fv(3, 1, glm::value_ptr(light.position));
-
                         glUniform1f(4, shadingData.shininess);
 
                         render(shader);

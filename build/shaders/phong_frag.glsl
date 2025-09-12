@@ -13,10 +13,19 @@ in vec3 fragNormal; // World-space normal
 uniform vec3 fragK_s;
 uniform vec3 fragCameraPos;
 uniform vec3 fragLightPos;
+uniform float fragShininess;
 
 void main()
 {
+    /*
+    Real-time shadows page 326
+    \kappa_s \max(0, \omega \cdot \mathbf{r})^\alpha
+    */
+
     // we wanted the incident light, so we have to revert the factor
-    vec3 reflectionVector = reflect(-fragLightPos, normalize(fragNormal));
-    outColor = vec4(fragK_s * dot(reflectionVector, fragCameraPos-fragPos), 1.0);
+    vec3 I = normalize(-(fragLightPos - fragPos));
+    vec3 N = normalize(fragNormal);
+    vec3 R = reflect(I, N);
+    vec3 V = normalize(fragCameraPos - fragPos);
+    outColor = vec4(fragK_s * pow(max(0.0, dot(R, V)), fragShininess), 1.0);
 }

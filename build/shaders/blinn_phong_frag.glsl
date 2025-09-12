@@ -13,10 +13,20 @@ in vec3 fragNormal; // World-space normal
 uniform vec3 fragK_s;
 uniform vec3 fragCameraPos;
 uniform vec3 fragLightPos;
-uniform vec3 fragShininess;
+uniform float fragShininess;
 
 void main()
 {
-    outColor = vec4(abs(fragNormal), 1.0);
-    outColor = vec4(dot(, fragNormal) ** fragShininess, 1.0);
+    /*
+    Real-time shadows page 326
+    \kappa_s \max(0, \mathbf{h} \cdot \mathbf{n})^\alpha
+    where \mathbf{h} := (\boldsymbol{\omega} + \mathbf{l}) / \Vert \boldsymbol{\omega} + \mathbf{l} \Vert
+    which is equal to normalizing \omega + \mathbf{l}
+    */
+
+    vec3 N = normalize(fragNormal);
+    vec3 L = normalize(fragLightPos - fragPos);
+    vec3 V = normalize(fragCameraPos - fragPos);
+    vec3 H = normalize(L + V);
+    outColor = vec4(fragK_s*pow(max(0.0, dot(H, N)), fragShininess), 1.0);
 }
