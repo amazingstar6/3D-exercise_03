@@ -17,12 +17,12 @@ uniform int fragToonDiscretize;
 void main()
 {
     // Code taken from lambert_frag.glsl
-    // vec3 N = normalize(fragNormal);
-    // vec3 L = normalize(fragLightPosition - fragPos);
-    // float diffuseStrength = abs(dot(L, N));
+    vec3 N = normalize(fragNormal);
+    vec3 L = normalize(fragLightPosition - fragPos);
+    float diffuseStrength = abs(dot(L, N));
     // For toon shading, we round the strength to the nearest interval
-    // diffuseStrength = round(diffuseStrength * fragToonDiscretize) / float(fragToonDiscretize);
-    // outColor = vec4(fragK_d*diffuseStrength, 1);
+    diffuseStrength = round(diffuseStrength * fragToonDiscretize) / float(fragToonDiscretize);
+    outColor = vec4(fragK_d*diffuseStrength, 1);
     // outColor = vec4(fragLightPosition, 1);
-    outColor = vec4(1,1,1,1);
+    // outColor = vec4(1,1,1,1);
 }

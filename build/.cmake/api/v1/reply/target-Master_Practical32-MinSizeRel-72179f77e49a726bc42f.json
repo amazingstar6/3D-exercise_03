@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "Release/Master_Practical32.exe"
+			"path" : "MinSizeRel/Master_Practical32.exe"
 		},
 		{
-			"path" : "Release/Master_Practical32.pdb"
+			"path" : "MinSizeRel/Master_Practical32.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -101,7 +101,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG -std:c++20"
+					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O1 /Ob1 /DNDEBUG -std:c++20"
 				},
 				{
 					"backtrace" : 9,
@@ -277,12 +277,28 @@
 	"dependencies" : 
 	[
 		{
+			"backtrace" : 7,
+			"id" : "Master_Practical32_copy_shaders::@6890427a1f51a3e7e1df"
+		},
+		{
 			"backtrace" : 2,
 			"id" : "CGFramework::@217a96c3a62328a73ef4"
 		},
 		{
-			"backtrace" : 7,
-			"id" : "Master_Practical32_copy_shaders::@6890427a1f51a3e7e1df"
+			"backtrace" : 2,
+			"id" : "fmt::@0dd0d94e1dc15276fb9a"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "glad::@37fc3951361369fd0aab"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "imgui::@d93b9608dfe271870d34"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "nativefiledialog::@5dc90a60f82ed0bfb84e"
 		},
 		{
 			"backtrace" : 2,
@@ -291,22 +307,6 @@
 		{
 			"backtrace" : 2,
 			"id" : "glfw::@1ea9373b6bb5e4d316d5"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "imgui::@d93b9608dfe271870d34"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "glad::@37fc3951361369fd0aab"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "fmt::@0dd0d94e1dc15276fb9a"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "nativefiledialog::@5dc90a60f82ed0bfb84e"
 		},
 		{
 			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
@@ -318,7 +318,7 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG",
+				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O1 /Ob1 /DNDEBUG",
 				"role" : "flags"
 			},
 			{
@@ -327,7 +327,7 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "framework\\Release\\CGFramework.lib",
+				"fragment" : "framework\\MinSizeRel\\CGFramework.lib",
 				"role" : "libraries"
 			},
 			{
@@ -337,17 +337,17 @@
 			},
 			{
 				"backtrace" : 4,
-				"fragment" : "framework\\third_party\\glad\\Release\\glad.lib",
+				"fragment" : "framework\\third_party\\glad\\MinSizeRel\\glad.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 4,
-				"fragment" : "framework\\third_party\\imgui\\Release\\imgui.lib",
+				"fragment" : "framework\\third_party\\imgui\\MinSizeRel\\imgui.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 4,
-				"fragment" : "framework\\third_party\\glfw3\\src\\Release\\glfw3.lib",
+				"fragment" : "framework\\third_party\\glfw3\\src\\MinSizeRel\\glfw3.lib",
 				"role" : "libraries"
 			},
 			{
@@ -357,17 +357,17 @@
 			},
 			{
 				"backtrace" : 4,
-				"fragment" : "framework\\third_party\\tinyobjloader\\Release\\tinyobjloader.lib",
+				"fragment" : "framework\\third_party\\tinyobjloader\\MinSizeRel\\tinyobjloader.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 4,
-				"fragment" : "framework\\third_party\\fmt\\Release\\fmt.lib",
+				"fragment" : "framework\\third_party\\fmt\\MinSizeRel\\fmt.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 4,
-				"fragment" : "framework\\third_party\\nativefiledialog\\Release\\nativefiledialog.lib",
+				"fragment" : "framework\\third_party\\nativefiledialog\\MinSizeRel\\nativefiledialog.lib",
 				"role" : "libraries"
 			},
 			{

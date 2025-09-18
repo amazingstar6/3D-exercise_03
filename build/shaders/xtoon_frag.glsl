@@ -10,9 +10,36 @@ out vec4 outColor;
 in vec3 fragPos; // World-space position
 in vec3 fragNormal; // World-space normal
 
+uniform sampler2D texToon;
+
+// uniform vec3 fragK_d;
+uniform vec3 fragLightPosition;
+
+// uniform vec3 fragK_s;
+uniform vec3 fragCameraPos;
+uniform float fragShininess;
+
 
 void main()
 {
-    // Output the normal as color
-    outColor = vec4(abs(fragNormal), 1.0);
+    vec3 N = normalize(fragNormal);
+    vec3 L = normalize(fragLightPosition - fragPos);
+    float diffuseStrength = abs(dot(L, N));
+    // outColor = vec4(fragK_d*diffuseStrength, 1);
+
+    vec3 V = normalize(fragCameraPos - fragPos);
+    vec3 H = normalize(L + V);
+    float blinnPhongStrength = pow(max(0.0, dot(H, N)), fragShininess);
+    // outColor = vec4(fragK_s*blinnPhongStrength, 1.0);
+
+    float totalStrength = diffuseStrength + blinnPhongStrength;
+    float distanceViewerFragment = distance(fragCameraPos, fragPos);
+
+    float maxDistance = 5.0; // approximate far plane distance
+    float normalizedStrength = clamp(totalStrength, 0.0, 1.0);
+    float normalizedDistance = clamp(distanceViewerFragment / maxDistance, 0.0, 1.0);
+
+    // TODO scale coordinates for texture
+    outColor = texture(texToon, vec2(normalizedStrength, normalizedDistance));
+    // outColor = vec4(vec3(normalizedDistance), 1.0);
 }

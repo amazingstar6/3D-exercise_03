@@ -13,6 +13,7 @@ in vec3 fragNormal; // World-space normal
 uniform vec3 fragK_s;
 uniform vec3 fragCameraPos;
 uniform vec3 fragLightPos;
+uniform vec3 fragLightColor;
 uniform float fragShininess;
 
 void main()
@@ -27,5 +28,5 @@ void main()
     vec3 N = normalize(fragNormal);
     vec3 R = reflect(I, N);
     vec3 V = normalize(fragCameraPos - fragPos);
-    outColor = vec4(fragK_s * pow(max(0.0, dot(R, V)), fragShininess), 1.0);
+    outColor = vec4(fragLightColor * fragK_s * pow(max(0.0, dot(R, V)), fragShininess), 1.0);
 }

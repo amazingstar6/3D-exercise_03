@@ -10,7 +10,6 @@ out vec4 outColor;
 in vec3 fragPos; // World-space position
 in vec3 fragNormal; // World-space normal
 
-uniform vec3 fragK_s;
 uniform vec3 fragCameraPos;
 uniform vec3 fragLightPos;
 uniform float fragShininess;
@@ -30,5 +29,4 @@ void main()
     } else {
         outColor = vec4(0, 0, 0, 0); // we return invisible black
     }
-    // fragK_s is not used!
 }

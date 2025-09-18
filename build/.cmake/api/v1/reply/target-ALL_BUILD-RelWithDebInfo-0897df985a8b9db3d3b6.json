@@ -17,34 +17,34 @@
 	"dependencies" : 
 	[
 		{
+			"id" : "Master_Practical32::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "CGFramework::@217a96c3a62328a73ef4"
+		},
+		{
+			"id" : "fmt::@0dd0d94e1dc15276fb9a"
+		},
+		{
 			"id" : "Catch2::@5d14516d7c572ca1c0b9"
 		},
 		{
 			"id" : "Catch2WithMain::@5d14516d7c572ca1c0b9"
 		},
 		{
-			"id" : "CGFramework::@217a96c3a62328a73ef4"
+			"id" : "glad::@37fc3951361369fd0aab"
 		},
 		{
-			"id" : "Master_Practical32::@6890427a1f51a3e7e1df"
+			"id" : "imgui::@d93b9608dfe271870d34"
+		},
+		{
+			"id" : "nativefiledialog::@5dc90a60f82ed0bfb84e"
 		},
 		{
 			"id" : "tinyobjloader::@9b74d22b9aa34cf3c85f"
 		},
 		{
 			"id" : "glfw::@1ea9373b6bb5e4d316d5"
-		},
-		{
-			"id" : "imgui::@d93b9608dfe271870d34"
-		},
-		{
-			"id" : "glad::@37fc3951361369fd0aab"
-		},
-		{
-			"id" : "fmt::@0dd0d94e1dc15276fb9a"
-		},
-		{
-			"id" : "nativefiledialog::@5dc90a60f82ed0bfb84e"
 		},
 		{
 			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"

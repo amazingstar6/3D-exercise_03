@@ -574,7 +574,15 @@ int main(int argc, char** argv)
                         // Values that you may want to pass to the shader are stored in light, shadingData and cameraPos and texToon.
                         glActiveTexture(GL_TEXTURE0);
                         glBindTexture(GL_TEXTURE_2D, texToon);
-                        glUniform1i(xToonShader.getUniformLocation("xxx"), 0); // Change xxx to the uniform name that you want to use.
+                        glUniform1i(xToonShader.getUniformLocation("texToon"), 0); // Change xxx to the uniform name that you want to use.
+
+                        // glUniform3fv(xToonShader.getUniformLocation("fragK_d"), 1, glm::value_ptr(shadingData.kd));
+                        glUniform3fv(xToonShader.getUniformLocation("fragLightPosition"), 1, glm::value_ptr(light.position));
+
+                        // glUniform3fv(xToonShader.getUniformLocation("fragK_s"), 1, glm::value_ptr(shadingData.ks));
+                        glUniform3fv(xToonShader.getUniformLocation("fragCameraPos"), 1, glm::value_ptr(cameraPos));
+                        glUniform1f(xToonShader.getUniformLocation("fragShininess"), shadingData.shininess);
+
                         render(xToonShader);
                     } else {
                         if (toonLightingDiffuse) {
@@ -595,14 +603,13 @@ int main(int argc, char** argv)
                             // === SET YOUR SPECULAR TOON UNIFORMS HERE ===
                             // Values that you may want to pass to the shader are stored in light, shadingData and cameraPos.
 
-                            glUniform3fv(toonSpecularShader.getUniformLocation("fragK_s"), 1, glm::value_ptr(shadingData.ks));
                             glUniform3fv(toonSpecularShader.getUniformLocation("fragCameraPos"), 1, glm::value_ptr(cameraPos));
                             glUniform3fv(toonSpecularShader.getUniformLocation("fragLightPos"), 1, glm::value_ptr(light.position));
                             glUniform1f(toonSpecularShader.getUniformLocation("fragShininess"), shadingData.shininess);
 
                             glUniform1f(toonSpecularShader.getUniformLocation("fragToonSpecularThreshold"), shadingData.toonSpecularThreshold);
 
-                                render(toonSpecularShader);
+                            render(toonSpecularShader);
                         }
                     }
                 }
@@ -616,6 +623,7 @@ int main(int argc, char** argv)
 
                         glUniform3fv(lambertShader.getUniformLocation("fragK_d"), 1, glm::value_ptr(shadingData.kd));
                         glUniform3fv(lambertShader.getUniformLocation("fragLightPosition"), 1, glm::value_ptr(light.position));
+                        // glUniform3fv(lambertShader.getUniformLocation("fragLightColor"), 1, glm::value_ptr(light.color));
 
                         render(lambertShader);
                     }
@@ -626,10 +634,11 @@ int main(int argc, char** argv)
                             // === SET YOUR PHONG/BLINN PHONG UNIFORMS HERE ===
                             // Values that you may want to pass to the shader are stored in light, shadingData and cameraPos.
 
-                        glUniform3fv(1, 1, glm::value_ptr(shadingData.ks));
-                        glUniform3fv(2, 1, glm::value_ptr(cameraPos));
-                        glUniform3fv(3, 1, glm::value_ptr(light.position));
-                        glUniform1f(4, shadingData.shininess);
+                        glUniform3fv(phongShader.getUniformLocation("fragK_s"), 1, glm::value_ptr(shadingData.ks));
+                        glUniform3fv(phongShader.getUniformLocation("fragCameraPos"), 1, glm::value_ptr(cameraPos));
+                        glUniform3fv(phongShader.getUniformLocation("fragLightPos"), 1, glm::value_ptr(light.position));
+                        glUniform3fv(phongShader.getUniformLocation("fragLightColor"), 1, glm::value_ptr(light.color));
+                        glUniform1f(phongShader.getUniformLocation("fragShininess"), shadingData.shininess);
 
                         render(shader);
                     }

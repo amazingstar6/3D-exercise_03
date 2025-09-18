@@ -12,6 +12,7 @@ in vec3 fragNormal; // World-space normal
 
 uniform vec3 fragK_d;
 uniform vec3 fragLightPosition;
+// uniform vec3 fragLightColor;
 
 void main()
 {    
@@ -21,6 +22,8 @@ void main()
     */
     vec3 N = normalize(fragNormal);
     vec3 L = normalize(fragLightPosition - fragPos);
-    float diffuseStrength = abs(dot(L, N));
-    outColor = vec4(fragK_d*diffuseStrength, 1);
+    float diffuseStrength = max(0, dot(L, N));
+    outColor = vec4(fragK_d * diffuseStrength, 1);
+    // not necessary to multiply by fragLightColor
+    // outColor = vec4(fragLightColor * fragK_d * diffuseStrength, 1);
 }
