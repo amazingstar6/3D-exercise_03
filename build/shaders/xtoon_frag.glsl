@@ -34,12 +34,18 @@ void main()
 
     float totalStrength = diffuseStrength + blinnPhongStrength;
     float distanceViewerFragment = distance(fragCameraPos, fragPos);
-
-    float maxDistance = 5.0; // approximate far plane distance
     float normalizedStrength = clamp(totalStrength, 0.0, 1.0);
-    float normalizedDistance = clamp(distanceViewerFragment / maxDistance, 0.0, 1.0);
 
-    // TODO scale coordinates for texture
-    outColor = texture(texToon, vec2(normalizedStrength, normalizedDistance));
+    // if (distanceViewerFragment < 2.6) {
+    //     outColor = vec4(vec3(0.0), 1.0);
+    // } else {
+    //     outColor = vec4(vec3(1.0), 1.0);
+    // }
+
+    // distanceViewerFragment is value between 2.5-3 (trial & error)
+    // we try to make the normalized distance a value between 0 and 1
+    float normalizedDistance = (distanceViewerFragment - 2.5) * 2;
+
+    outColor = texture(texToon, vec2(normalizedDistance, normalizedDistance));
     // outColor = vec4(vec3(normalizedDistance), 1.0);
 }

@@ -10,6 +10,8 @@ DISABLE_WARNINGS_PUSH()
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
+// for debugging purposes
+#include <glm/gtx/string_cast.hpp>
 // #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 DISABLE_WARNINGS_POP()
@@ -77,7 +79,61 @@ static glm::vec3 userInteractionSphere(const glm::vec3& selectedPos, const glm::
     // RETURN the new light position, defined as follows.
     // selectedPos is a location on the mesh. Use this location to place the light source to cover the location as seen from camPos.
     // Further, the light should be at a distance of 1.5 from the origin of the scene - in other words, located on a sphere of radius 1.5 around the origin.
-    return glm::vec3(1, 1, 1);
+    // return glm::vec3(1, 1, 1);
+
+    // the selectedPos is the position which the MOUSE is pointing at on the mesh
+
+    // You need to place a light source on the sphere of radius 1.5 centered at the origin(0, 0, 0).The light should be positioned such that, from the camera position(camPos), the line of sight through the selected position(selectedPos) intersects that sphere.
+
+    // We find the intersection between camPos to selectedPos vector with the sphere:
+    // https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection 
+
+    // We can write the line mathematically as x = o + du, where
+    //      x are the points on the line
+    //      o is the origin of the line, in our case camPos
+    //      d is the distance from the origin of the line
+    //      u is the direction vector
+    // First, we create the unit vector that with the direction from camPos to selectedPos
+    glm::vec3 o = camPos;
+    glm::vec3 u = normalize(o - selectedPos);
+
+    // The sphere has the equation ||x-c||^2 = r^2
+    //      x is the points on the sphere
+    //      c is the center point, in our case (0,0,0)
+    //      r is the radius of the sphere, in our case 1.5
+    float r = 1.5;
+
+    // Then we find the intersect between this vector and the sphere
+    // we use the simplified formula with the unit vector from wikipedia (with c being (0,0,0)):
+    // discriminant = [u \cdot o]^2 - (||o||^2 - r^2)
+    // solution = -[u \cdot o] +- sqrt(discriminant)
+
+    std::cout << "Vector o is: " << glm::to_string(o) << "; Vector u is: " << glm::to_string(u) << "; r is: " << r << std::endl;
+
+    // the discriminant:
+    float uoDotProduct = glm::dot(u, o);
+    float discriminant = (uoDotProduct * uoDotProduct) - (glm::pow(glm::length(o), 2) - pow(r, 2));
+    float solution;
+    if (discriminant < 0.0f) {
+        // Case 1: No solution exists
+        std::cout << "ERROR: did not find solution" << std::endl;
+        return glm::vec3(0); // TODO
+    } else {
+        // Case 2 or 3: One or two solutions exist
+        // d = -[u_hat . (o - c)] +/- sqrt(V)
+        float sqrtDiscriminant = glm::sqrt(discriminant);
+        
+        float t1 = -uoDotProduct + sqrtDiscriminant;
+        float t2 = -uoDotProduct - sqrtDiscriminant;
+        
+        solution = glm::max(t1, t2);
+        std::cout << "Found solution: " << solution << std::endl;
+    }
+
+    // return point; put solution in formula x = o + du
+    glm::vec3 point = o + solution * u;
+    std::cout << "Final point is: " << glm::to_string(point) << std::endl;
+    return point;
 }
 
 static glm::vec3 userInteractionShadow(const glm::vec3& selectedPos, const glm::vec3& selectedNormal, const glm::vec3& lightPos)
@@ -86,7 +142,33 @@ static glm::vec3 userInteractionShadow(const glm::vec3& selectedPos, const glm::
     //--- in this way, the shading boundary will be exactly at this location.
     // there are several ways to do this, choose one you deem appropriate given the current light position
     // no panic, I will not judge what solution you chose, as long as the above condition is met.
-    return glm::vec3(1, 0, 1);
+
+    // to calculate dot(L, N) we first define L and N
+    glm::vec3 L = glm::normalize(lightPos - selectedPos);
+    glm::vec3 N = selectedNormal;
+    // glm::vec3 dotLN = glm::dot(L, N);
+
+    // We have to find a vector perpendicular to the normal vector
+    // so when the dot product is 0
+    // for the dot product we have three random variables, so we choose 2 ourselves
+    // float b_x = 1;
+    // float b_y = 1;
+    // then we calculate b_z
+    // float b_z = -((N.x * b_x)/N.z) -((N.y * b_y)/N.z);
+    // glm::vec3 B = glm::vec3(b_x, b_y, b_z);
+
+    glm::vec3 B = glm::vec3(1, 0, 0);
+    if (glm::abs(glm::dot(B, N)) > 0.99f) // N is nearly parallel to ref
+        B = glm::vec3(0, 1, 0);
+
+    // I now have L, but I have to calculate the lightPos, so I have to add selectedPos to B
+    B = B + selectedPos;
+
+    // check if they are perpendicular using the dot product
+    float dotNb = glm::dot(selectedPos, N);
+    std::cout << "Dot product between normal vector and new vector is: " << dotNb << std::endl;
+
+    return B;
 }
 
 static glm::vec3 userInteractionSpecular(const glm::vec3& selectedPos, const glm::vec3& selectedNormal, const glm::vec3& lightPos, const glm::vec3& cameraPos)
@@ -95,7 +177,17 @@ static glm::vec3 userInteractionSpecular(const glm::vec3& selectedPos, const glm
     // please ensure also that the light is at a distance of 1 from selectedPos! If the camera is on the wrong side of the surface (normal pointing the other way),
     // then just return the original light position.
     // There is only ONE way of doing this!
-    return glm::vec3(0, 1, 1);
+    // return glm::vec3(0, 1, 1);
+
+    // the light position should be so that the light reflects into the cameraPos.
+    // so reflected(light) should be where the camera is
+
+    // we get the unit incident vector for the camera:
+    glm::vec3 camera = -glm::normalize(cameraPos - selectedPos);
+    glm::vec3 normal = selectedNormal;
+    glm::vec3 reflection = glm::reflect(camera, normal);
+    glm::vec3 lightPosNew = selectedPos + reflection;
+    return lightPosNew;
 }
 
 static size_t getClosestVertexIndex(const Mesh& mesh, const glm::vec3& pos);
@@ -180,7 +272,7 @@ void imgui()
     }
 
     // Dropdown for interaction mode
-    std::array interactionModeNames { "Shadow", "Sphere", "Specular" };
+    std::array interactionModeNames{"Sphere", "Shadow", "Specular"};
     int current_mode = static_cast<int>(interfaceLightPlacement);
     ImGui::Combo("User Interaction Mode", &current_mode, interactionModeNames.data(), (int)interactionModeNames.size());
     interfaceLightPlacement = static_cast<LightPlacementValue>(current_mode);
@@ -364,18 +456,40 @@ int main(int argc, char** argv)
         }
         case GLFW_KEY_R: {
             if (shiftPressed) {
-                // Decrease diffuse Kd coefficient in the red channel by 0.1
-            } else {
                 // Increase diffuse Kd coefficient in the red channel by 0.1
+                lights[selectedLightIndex].color.r += 0.1;
+            } else {
+                // Decrease diffuse Kd coefficient in the red channel by 0.1
+                lights[selectedLightIndex].color.r -= 0.1;
             }
             return;
         }
         case GLFW_KEY_G: {
             // Same for green.
+            if (shiftPressed)
+            {
+                // Increase diffuse Kd coefficient in the red channel by 0.1
+                lights[selectedLightIndex].color.g += 0.1;
+            }
+            else
+            {
+                // Decrease diffuse Kd coefficient in the red channel by 0.1
+                lights[selectedLightIndex].color.g -= 0.1;
+            }
             return;
         }
         case GLFW_KEY_B: {
             // Same for blue.
+            if (shiftPressed)
+            {
+                // Increase diffuse Kd coefficient in the red channel by 0.1
+                lights[selectedLightIndex].color.b += 0.1;
+            }
+            else
+            {
+                // Decrease diffuse Kd coefficient in the red channel by 0.1
+                lights[selectedLightIndex].color.b -= 0.1;
+            }
             return;
         }
         default:
@@ -593,6 +707,7 @@ int main(int argc, char** argv)
                             
                             glUniform3fv(toonDiffuseShader.getUniformLocation("fragK_d"), 1, glm::value_ptr(shadingData.kd));
                             glUniform3fv(toonDiffuseShader.getUniformLocation("fragLightPosition"), 1, glm::value_ptr(light.position));
+                            glUniform3fv(toonDiffuseShader.getUniformLocation("fragLightColor"), 1, glm::value_ptr(light.color));
                             glUniform1i(toonDiffuseShader.getUniformLocation("fragToonDiscretize"), shadingData.toonDiscretize);
 
                             render(toonDiffuseShader);
@@ -604,7 +719,8 @@ int main(int argc, char** argv)
                             // Values that you may want to pass to the shader are stored in light, shadingData and cameraPos.
 
                             glUniform3fv(toonSpecularShader.getUniformLocation("fragCameraPos"), 1, glm::value_ptr(cameraPos));
-                            glUniform3fv(toonSpecularShader.getUniformLocation("fragLightPos"), 1, glm::value_ptr(light.position));
+                            glUniform3fv(toonSpecularShader.getUniformLocation("fragLightPosition"), 1, glm::value_ptr(light.position));
+                            glUniform3fv(toonSpecularShader.getUniformLocation("fragLightColor"), 1, glm::value_ptr(light.color));
                             glUniform1f(toonSpecularShader.getUniformLocation("fragShininess"), shadingData.shininess);
 
                             glUniform1f(toonSpecularShader.getUniformLocation("fragToonSpecularThreshold"), shadingData.toonSpecularThreshold);
@@ -623,7 +739,7 @@ int main(int argc, char** argv)
 
                         glUniform3fv(lambertShader.getUniformLocation("fragK_d"), 1, glm::value_ptr(shadingData.kd));
                         glUniform3fv(lambertShader.getUniformLocation("fragLightPosition"), 1, glm::value_ptr(light.position));
-                        // glUniform3fv(lambertShader.getUniformLocation("fragLightColor"), 1, glm::value_ptr(light.color));
+                        glUniform3fv(lambertShader.getUniformLocation("fragLightColor"), 1, glm::value_ptr(light.color));
 
                         render(lambertShader);
                     }

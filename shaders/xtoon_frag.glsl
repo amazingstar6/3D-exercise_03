@@ -42,8 +42,6 @@ void main()
     //     outColor = vec4(vec3(1.0), 1.0);
     // }
 
-    // TODO how do we find out the min and max value without trial and error?
-    // TODO now, these values depend on the view (camera) position we have during trial and error
     // distanceViewerFragment is value between 2.5-3 (trial & error)
     // we try to make the normalized distance a value between 0 and 1
     float normalizedDistance = (distanceViewerFragment - 2.5) * 2;

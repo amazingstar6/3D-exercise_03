@@ -12,6 +12,7 @@ in vec3 fragNormal; // World-space normal
 
 uniform vec3 fragK_d;
 uniform vec3 fragLightPosition;
+uniform vec3 fragLightColor;
 uniform int fragToonDiscretize;
 
 void main()
@@ -22,7 +23,7 @@ void main()
     float diffuseStrength = abs(dot(L, N));
     // For toon shading, we round the strength to the nearest interval
     diffuseStrength = round(diffuseStrength * fragToonDiscretize) / float(fragToonDiscretize);
-    outColor = vec4(fragK_d*diffuseStrength, 1);
+    outColor = vec4(fragLightColor*fragK_d*diffuseStrength, 1);
     // outColor = vec4(fragLightPosition, 1);
     // outColor = vec4(1,1,1,1);
 }
