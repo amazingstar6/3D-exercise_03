@@ -180,14 +180,22 @@ static glm::vec3 userInteractionSpecular(const glm::vec3& selectedPos, const glm
     // return glm::vec3(0, 1, 1);
 
     // the light position should be so that the light reflects into the cameraPos.
-    // so reflected(light) should be where the camera is
+    // so reflected(camera) should be where the light is
 
-    // we get the unit incident vector for the camera:
-    glm::vec3 camera = -glm::normalize(cameraPos - selectedPos);
-    glm::vec3 normal = selectedNormal;
-    glm::vec3 reflection = glm::reflect(camera, normal);
-    glm::vec3 lightPosNew = selectedPos + reflection;
-    return lightPosNew;
+    // we get the unit vector for the camera:
+    glm::vec3 camera = glm::normalize(cameraPos - selectedPos);
+    glm::vec3 normal = glm::normalize(selectedNormal);
+    // we can use the dot product between the camera and the normal to check if we're not on the other side of the surface; we can do this by checking if the angle is more than 90 degrees between the two vectors; this is equal to the dot product being negative (cos(theta) being negative since both vectors are unit vectors)
+    float dotCameraNormal = glm::dot(camera, normal);
+    if (dotCameraNormal < 0) {
+        std::cout << "Specular user interaction: dot product between camera and normal is negative" << std::endl;
+        return lightPos;
+    } else {
+        // reflection should have a length 1, and the new light position is thus a distance of 1 from selectedPos; for the camera we need the incident vector
+        glm::vec3 reflection = glm::reflect(camera, normal);
+        glm::vec3 lightPosNew = selectedPos + reflection;
+        return lightPosNew;
+    }
 }
 
 static size_t getClosestVertexIndex(const Mesh& mesh, const glm::vec3& pos);
