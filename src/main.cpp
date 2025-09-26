@@ -157,17 +157,37 @@ static glm::vec3 userInteractionShadow(const glm::vec3& selectedPos, const glm::
     // float b_z = -((N.x * b_x)/N.z) -((N.y * b_y)/N.z);
     // glm::vec3 B = glm::vec3(b_x, b_y, b_z);
 
-    glm::vec3 B = glm::vec3(1, 0, 0);
-    if (glm::abs(glm::dot(B, N)) > 0.99f) // N is nearly parallel to ref
-        B = glm::vec3(0, 1, 0);
+    // glm::vec3 B = glm::vec3(1, 0, 0);
+    // we choose 2 variables ourselves
+    float b_x = 1;
+    float b_y = 0;
+    // todo correct formula?
+    float b_z = -((N.x * b_x) / N.z) - ((N.y * b_y) / N.z);
+    glm::vec3 B = glm::vec3(b_x, b_y, b_z);
 
-    // I now have L, but I have to calculate the lightPos, so I have to add selectedPos to B
-    B = B + selectedPos;
+    float dotNB = glm::dot(N, B);
+    if (dotNB != 0) {
+        // if this does not make it perfectly normal, second try
+        // TODO floating point error leads into this if branch as well?
+        b_x = 0;
+        b_y = 1;
+        b_z = -((N.x * b_x) / N.z) - ((N.y * b_y) / N.z);
+        B = glm::vec3(b_x, b_y, b_z);
+    }
 
+
+    // if (glm::abs(glm::dot(B, N)) > 0.99f) // N is nearly parallel to ref
+    //     B = glm::vec3(0, 1, 0);
+
+
+    
     // check if they are perpendicular using the dot product
-    float dotNb = glm::dot(selectedPos, N);
+    float dotNb = glm::dot(B, N);
     std::cout << "Dot product between normal vector and new vector is: " << dotNb << std::endl;
 
+    // I now have L, but I have to calculate the lightPos, so I have to add selectedPos to B
+    // B = B + selectedPos;
+    // B = glm::normalize(B - glm::dot(B, N) * N);
     return B;
 }
 
