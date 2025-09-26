@@ -144,24 +144,14 @@ static glm::vec3 userInteractionShadow(const glm::vec3& selectedPos, const glm::
     // no panic, I will not judge what solution you chose, as long as the above condition is met.
 
     // to calculate dot(L, N) we first define L and N
-    glm::vec3 L = glm::normalize(lightPos - selectedPos);
+    // glm::vec3 L = glm::normalize(lightPos - selectedPos);
     glm::vec3 N = selectedNormal;
-    // glm::vec3 dotLN = glm::dot(L, N);
 
     // We have to find a vector perpendicular to the normal vector
     // so when the dot product is 0
     // for the dot product we have three random variables, so we choose 2 ourselves
-    // float b_x = 1;
-    // float b_y = 1;
-    // then we calculate b_z
-    // float b_z = -((N.x * b_x)/N.z) -((N.y * b_y)/N.z);
-    // glm::vec3 B = glm::vec3(b_x, b_y, b_z);
-
-    // glm::vec3 B = glm::vec3(1, 0, 0);
-    // we choose 2 variables ourselves
     float b_x = 1;
     float b_y = 0;
-    // todo correct formula?
     float b_z = -((N.x * b_x) / N.z) - ((N.y * b_y) / N.z);
     glm::vec3 B = glm::vec3(b_x, b_y, b_z);
 
@@ -175,19 +165,10 @@ static glm::vec3 userInteractionShadow(const glm::vec3& selectedPos, const glm::
         B = glm::vec3(b_x, b_y, b_z);
     }
 
-
-    // if (glm::abs(glm::dot(B, N)) > 0.99f) // N is nearly parallel to ref
-    //     B = glm::vec3(0, 1, 0);
-
-
-    
     // check if they are perpendicular using the dot product
     float dotNb = glm::dot(B, N);
     std::cout << "Dot product between normal vector and new vector is: " << dotNb << std::endl;
 
-    // I now have L, but I have to calculate the lightPos, so I have to add selectedPos to B
-    // B = B + selectedPos;
-    // B = glm::normalize(B - glm::dot(B, N) * N);
     return B;
 }
 
