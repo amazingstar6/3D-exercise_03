@@ -46,6 +46,6 @@ void main()
     // we try to make the normalized distance a value between 0 and 1
     float normalizedDistance = (distanceViewerFragment - 2.5) * 2;
 
-    outColor = texture(texToon, vec2(normalizedDistance, normalizedDistance));
+    outColor = texture(texToon, vec2(normalizedStrength, normalizedDistance));
     // outColor = vec4(vec3(normalizedDistance), 1.0);
 }

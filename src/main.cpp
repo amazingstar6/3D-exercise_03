@@ -192,7 +192,7 @@ static glm::vec3 userInteractionSpecular(const glm::vec3& selectedPos, const glm
         return lightPos;
     } else {
         // reflection should have a length 1, and the new light position is thus a distance of 1 from selectedPos; for the camera we need the incident vector
-        glm::vec3 reflection = glm::reflect(camera, normal);
+        glm::vec3 reflection = glm::reflect(-camera, normal);
         glm::vec3 lightPosNew = selectedPos + reflection;
         return lightPosNew;
     }

@@ -12,7 +12,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "framework/MinSizeRel/CGFramework.lib"
+			"path" : "framework/RelWithDebInfo/CGFramework.lib"
 		}
 	],
 	"backtrace" : 1,
@@ -66,7 +66,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O1 /Ob1 /DNDEBUG -std:c++20"
+					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /Zi /O2 /Ob1 /DNDEBUG -std:c++20"
 				}
 			],
 			"includes" : 
@@ -146,6 +146,14 @@
 		},
 		{
 			"backtrace" : 2,
+			"id" : "tinyobjloader::@9b74d22b9aa34cf3c85f"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "glfw::@1ea9373b6bb5e4d316d5"
+		},
+		{
+			"backtrace" : 2,
 			"id" : "glad::@37fc3951361369fd0aab"
 		},
 		{
@@ -155,14 +163,6 @@
 		{
 			"backtrace" : 2,
 			"id" : "nativefiledialog::@5dc90a60f82ed0bfb84e"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "tinyobjloader::@9b74d22b9aa34cf3c85f"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "glfw::@1ea9373b6bb5e4d316d5"
 		},
 		{
 			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
